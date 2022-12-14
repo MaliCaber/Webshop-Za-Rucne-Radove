@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{artikal.naziv}}{% endblock title %}
+
+{% block content %}
+
+    {% if artikal.slika %}
+        <figure class="image is-4by3 mb-6">
+            <img src="{{artikal.slika.url}}" alt="{{artikal.naziv}}">
+        </figure>
+    {% endif %}
+
+    <h1 class="title">{{artikal.naziv}}, ${{artikal.cena}}</h1>
+
+    <p class="mb-6">
+        <span class="tag is-dark">{{ artikal.prodavac.ime }}</span>
+    </p>
+
+    <p>{{artikal.opis}}</p>
+
+    <hr>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="notification is-success is-toast">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+
+    <form method="post" action="">
+        {% csrf_token %}
+
+        <div class="field has-addons">
+            <div class="control">
+                <input type="number" name="kolicina" value="1" class="input" min="1" id="">
+            </div>
+
+            <div class="control">
+                <button class="button is-dark is-uppercase">Dodaj u Korpu</button>
+            </div>
+        </div>
+    </form>
+
+
+    {% if slicni_artikli %}
+        <hr>
+
+        <div class="columns is-multiline">
+            <div class="column is-12">
+                <h2 class="subtitle">Slicni artikli</h2>
+            </div>
+
+            {% for artikal in slicni_artikli %}
+                {% include 'artikal/delovi/prikaz_artikla.html' %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+{% endblock content %}

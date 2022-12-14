@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Uredi prodavca | {% endblock %}
+
+{% block content %}
+    <h1 class="title">Uredi prodavca</h1>
+
+    <form method="post" action=".">
+        {% csrf_token %}
+
+        <div class="field">
+            <label>Ime prodavca</label>
+
+            <div class="control">
+                <input type="text" name="name" id="id_name" value="{{ prodavac.ime }}" class="input">
+            </div>
+
+            <p class="help">Ovo nije isto kao username!</p>
+        </div>
+
+        <div class="field">
+            <label>E-mail</label>
+
+            <div class="control">
+                <input type="email" name="email" id="id_email" value="{{ prodavac.created_by.email }}" class="input">
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-dark is-uppercase">Sacuvaj izmene</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
