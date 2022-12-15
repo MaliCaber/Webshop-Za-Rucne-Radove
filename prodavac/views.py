@@ -86,7 +86,7 @@ def uredi_prodavca(request):
             prodavac.created_by.save()
 
             prodavac.ime = ime
-            prodavac.save
+            prodavac.save()
 
             return redirect('prodavac:prodavac-admin')
 
