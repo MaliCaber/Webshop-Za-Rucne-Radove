@@ -54,6 +54,6 @@ def kategorija(request, kategorija_slug):
 
 def pretraga(request):
     query = request.GET.get('query', '')
-    artikli = Artikal.objects.filter(Q(title__icontains=query) | Q(description__icontains=query))
+    artikli = Artikal.objects.filter(Q(naziv__icontains=query) | Q(opis__icontains=query))
 
     return render(request, 'artikal/pretraga.html', {'artikli':artikli, 'query': query})
