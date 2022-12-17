@@ -1,0 +1,102 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Prodavac Admin{% endblock title %}
+
+{% block content %}
+
+    <h1 class="title">Prodavac Admin - <span class="is-capitalized">{{prodavac.ime}}</span></h1>
+
+    <div class="mb-5">
+        <strong>Stanje: </strong> RSD {{prodavac.get_stanje}} <br>
+        <strong>Placen iznos: </strong> RSD {{prodavac.get_placeni_iznos}} 
+    </div>
+
+    <div class="box">
+    
+        <h2 class="is-size-3 mb-4">Moji Artikli</h2>
+
+        <a href="{% url 'prodavac:dodaj-artikal' %}" class="button is-dark is-uppercase mb-6">Dodaj Artikal</a>
+
+        {% if artikli %}
+        
+            <table class="table is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>S.B.</th>
+                        <th>Naziv</th>
+                        <th>Cena</th>
+						<th>Obrisi</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for artikal in artikli %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="{% url 'artikal:artikal' artikal.kategorija.slug artikal.slug %}">{{ artikal.naziv }}</a></td>
+                            <td>RSD {{ artikal.cena }}</td>
+							<td><a href="{% url 'artikal:obrisi-artikal' id=artikal.id %}" >Obrisi<i class="fa fa-trash"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        {% else %}
+            <p class="has-text-danger">Artikal jos nije dodat.</p>
+        {% endif %}
+    
+    </div>
+
+    <div class="box">
+        <h2 class="is-size-3 mb-4">Moje Porudzbenice</h2>
+
+        {% if porudzbenice %}
+            {% for porudzbenica in porudzbenice %}
+                <div class="{% if porudzbenica.fully_paid %}has-background-success-light{% else %}has-background-info-light{% endif %} mb-2 p-4">
+                    <div class="columns is-multiline">
+                        <div class="column is-6">
+                            <h3 class="is-size-4">#{{ porudzbenica.id }} - {{ porudzbenica.ime }} {{ porudzbenica.prezime }}</h3>
+                        </div>
+    
+                        <div class="column is-12">
+                            <b>Ime:</b> {{ porudzbenica.ime }} {{ porudzbenica.prezime }}<br>
+                            <b>Adresa:</b> {{ porudzbenica.adresa }}<br>
+                            <b>Zip and mesto:</b> {{ porudzbenica.zipcode }} {{ porudzbenica.mesto }}<br>
+                            <b>E-mail:</b> {{ porudzbenica.email }}<br>
+                            <b>Telefon:</b> {{ porudzbenica.telefon }}
+    
+                            <table class="table is-fullwidth mt-4">
+                                <thead>
+                                    <tr>
+                                        <th>Naziv</th>
+                                        <th>Cena</th>
+                                        <th>Kolicina</th>
+                                        <th>Placeno</th>
+                                        <th>Ukupno</th>
+                                    </tr>
+                                </thead>
+    
+                                <tbody>
+                                    {% for item in porudzbenica.stvari.all %}
+                                        {% if item.prodavac == request.user.prodavac %}
+                                            <tr>
+                                                <td>{{ item.artikal.naziv }}</td>
+                                                <td>RSD {{ item.artikal.cena }}</td>
+                                                <td>{{ item.kolicina }}</td>
+                                                <td>{{ item.prodavac_platio|yesno:"Yes,No" }}</td>
+                                                <td>RSD {{ item.get_ukupna_cena }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+
+{% endblock content %}

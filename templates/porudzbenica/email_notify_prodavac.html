@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <title>Prodavnica</title>
+
+        <style type="text/css">
+            html {
+                width: 100%;
+            }
+
+            body {
+                width: 100%;
+                font-family: Arial;
+                font-size: 14px;
+                background-color: #fff;
+                color: #333;
+            }
+        </style>
+    </head>
+
+    <body>
+        <table width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+                <td><h1>Nova porudzbenica</h1></td>
+            </tr>
+
+            <tr>
+                <td>
+                    <h3>Detalji</h3>
+
+                    <b>Ime:</b> {{ porudzbenica.ime }} {{ porudzbenica.prezime }}<br>
+                    <b>Adresa:</b> {{ porudzbenica.adresa }}<br>
+                    <b>Zip i mesto:</b> {{ porudzbenica.zipcode }} {{ porudzbenica.mesto }}<br>
+                    <b>E-mail:</b> {{ porudzbenica.email }}<br>
+                    <b>Telefon:</b> {{ porudzbenica.telefon }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <h3>Artikli</h3>
+
+                    <table width="100%" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td><b>Artikal</b></td>
+                            <td><b>Cena</b></td>
+                            <td><b>Kolicina</b></td>
+                            <td><b>Ukupno</b></td>
+                        </tr>
+                        
+                        {% for item in porudzbenica.stvari.all %}
+                            {% if item.prodavac == prodavac %}
+                                <tr>
+                                    <td>{{ item.artikal.naziv }}</td>
+                                    <td>RSD{{ item.artikal.cena }}</td>
+                                    <td>{{ item.kolicina }}</td>
+                                    <td>RSD{{ item.get_ukupna_cena }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

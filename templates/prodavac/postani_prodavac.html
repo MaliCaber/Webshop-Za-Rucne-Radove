@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Postani Prodavac {% endblock title %}
+
+{% block content %}
+
+    <h1 class="title">Postani Prodavac</h1>
+
+    <form method="post" action="">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-dark is-uppercase">Sign Up</button>
+            </div>
+        </div>
+    </form>
+{% endblock content %}
