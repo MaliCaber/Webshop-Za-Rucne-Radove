@@ -28,7 +28,7 @@
             <div id="navbarBasicExample" class="navbar-menu">
                 <div class="navbar-start">
                 <a class="navbar-item" href="{% url 'base:home' %}">
-                    Pocetna
+                    Početna
                 </a>
                 
                 {% for kategorija in kategorije %}
@@ -46,10 +46,10 @@
                         <form method="get" action="{% url 'artikal:pretraga' %}">
                             <div class="field has-addons">
                                 <div class="control">
-                                    <input type="search" name="query" id="" class="input" placeholder="Pretrazi...">
+                                    <input type="search" name="query" id="" class="input" placeholder="Pretraži...">
                                 </div>
                                 <div class="control">
-                                    <button class="button is-dark is-uppercase">Pretrazi</button>
+                                    <button class="button is-dark is-uppercase">Pretraži</button>
                                 </div>
                             </div>
                         </form>
